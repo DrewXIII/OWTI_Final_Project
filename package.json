@@ -1,0 +1,33 @@
+{
+  "name": "owti_final_project",
+  "version": "1.0.0",
+  "description": "Hack a BOS final project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DrewXIII/OWTI_Final_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DrewXIII/OWTI_Final_Project/issues"
+  },
+  "homepage": "https://github.com/DrewXIII/OWTI_Final_Project#readme",
+  "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.14.0",
+    "dot-object": "^1.7.1",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.11",
+    "multer": "^1.4.1",
+    "uuid": "^3.3.2"
+  }
+}
