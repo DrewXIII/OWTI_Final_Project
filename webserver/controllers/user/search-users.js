@@ -3,6 +3,11 @@
 const Joi = require("@hapi/joi");
 const UserModel = require("../../../models/user-model");
 
+/**
+ * Validate if search data is valid
+ * @param {Object} payload Object to be validated. { q: String to search }
+ * @return {Object} null if data is valid, throw an Error if data is not valid
+ */
 async function validate(payload) {
   const schema = {
     q: Joi.string()
@@ -34,4 +39,26 @@ async function searchUsers(req, res, next) {
       $meta: "textScore"
     }
   };
+  try {
+    const users = await UserModel.find(op, scoreSearch)
+      .sort(scoreSearch)
+      .lean();
+
+    const usersMinimumInfo = users.map(userResult => {
+      const { uuid, fullName, avatarUrl, score } = userResult;
+
+      return {
+        uuid,
+        fullName,
+        avatarUrl,
+        score
+      };
+    });
+
+    return res.send(usersMinimumInfo);
+  } catch (e) {
+    return res.status(500).send(e.message);
+  }
 }
+
+module.exports = searchUsers;
