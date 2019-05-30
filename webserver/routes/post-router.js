@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+
 const checkJwtToken = require("../controllers/session/check-jwt-token");
 const createPost = require("../controllers/post/create-post");
 
