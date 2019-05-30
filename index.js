@@ -15,6 +15,46 @@ const routers = require("./webserver/routes"); // Aquí llamo a todas las rutas 
 const app = express();
 app.use(bodyParser.json()); // Parse application/json
 
+// Conectamos con el frontend (CORS)
+
+app.use((req, res, next) => {
+  const accessControlAllowMethods = [
+    "GET",
+    "POST",
+    "DELETE",
+    "HEAD",
+    "PATCH",
+    "PUT",
+    "OPTIONS"
+  ];
+
+  const accessControlAllowHeaders = [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "Accept-Version",
+    "Authorization",
+    "Location"
+  ];
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Methods",
+    accessControlAllowMethods.join(",")
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    accessControlAllowHeaders.join(",")
+  );
+  res.header(
+    "Access-Control-Expose-Headers",
+    accessControlAllowHeaders.join(",")
+  );
+  next();
+});
+
 // Lo que está a continuación es por si hay un problema con el body.
 
 app.use((err, req, res, next) => {
