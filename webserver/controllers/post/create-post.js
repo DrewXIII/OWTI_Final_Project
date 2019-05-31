@@ -71,7 +71,7 @@ async function createPost(req, res, next) {
       }
     };
 
-    await WallModel.findOneAndUpdate(filter, operation);
+    await WallModel.findOneAndReplace(filter, operation);
 
     return res.status(201).send(postCreated); // 201 Created - HTTP
   } catch (e) {
