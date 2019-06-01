@@ -70,7 +70,7 @@ async function login(req, res, next) {
      */
     const payloadJwt = {
       uuid: userProfile.uuid,
-      role: "admin" // userData.role si viene de bbdd
+      role: "admin"
     };
 
     const jwtTokenExpiration = parseInt(process.env.AUTH_ACCESS_TOKEN_TTL, 10);

@@ -97,13 +97,6 @@ async function addVerificationCode(userId) {
     .substring(0, 19)
     .replace("T", " ");
 
-  // await verificationCode.save({
-  //   // TODO: REVISAR AQUÍ
-  //   user_uuid: uuid,
-  //   verification_code: verificationCode,
-  //   created_at: createdAt
-  // });
-
   const userActivation = new UsersActivation({
     verificationCode,
     createdAt,
