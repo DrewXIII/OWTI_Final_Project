@@ -10,7 +10,24 @@ const userSchema = new Schema({
     unique: true
   },
   avatarUrl: String,
-  fullName: String
+  fullName: String,
+  address: {
+    addressLocality: String,
+    addressRegion: String,
+    postalCode: Number,
+    streetAddress: String
+  },
+  preferences: {
+    twitter: String,
+    instagram: String,
+    facebook: String,
+    web: String,
+    description: String
+  },
+  contact: {
+    email: String,
+    phoneNumber: Number
+  }
 });
 
 const User = mongoose.model("User", userSchema);

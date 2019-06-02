@@ -5,9 +5,8 @@ const Joi = require("joi"); // Object schema description language and validator 
 const sendgridMail = require("@sendgrid/mail"); // This is a dedicated service for interaction with the mail endpoint of the Sendgrid v3 API.
 const uuidV4 = require("uuid/v4"); // Simple, fast generation of RFC4122 UUIDS.This one generates and returns a RFC4122 v4 UUID (Universally Unique IDentifier).
 
-const mongoPool = require("../../databases/mongo-pool"); // Con esto podemos usar Mongo DB.
-const ProfileModel = require("../../models/profile-model");
-const UsersActivation = require("../../models/users-activation-model");
+const UserProfileModel = require("../../models/user-profile-model");
+const UserActivation = require("../../models/user-activation-model");
 const UserModel = require("../../models/user-model");
 const WallModel = require("../../models/wall-model");
 
@@ -72,7 +71,24 @@ async function createProfile(uuid) {
   const userProfileData = {
     uuid,
     avatarUrl: null,
-    fullName: null
+    fullName: null,
+    address: {
+      addressLocality: null,
+      addressRegion: null,
+      postalCode: null,
+      streetAddress: null
+    },
+    preferences: {
+      twitter: null,
+      instagram: null,
+      facebook: null,
+      web: null,
+      description: null
+    },
+    contact: {
+      email: null,
+      phoneNumber: null
+    }
   };
 
   const profileCreated = await UserModel.create(userProfileData);
@@ -89,7 +105,7 @@ async function createProfile(uuid) {
  * @param {string} userId User's id
  * @returns The created code or null in case of error.
  */
-async function addVerificationCode(userId) {
+async function addVerificationCode(uuid) {
   const verificationCode = uuidV4();
   const now = new Date();
   const createdAt = now
@@ -97,10 +113,10 @@ async function addVerificationCode(userId) {
     .substring(0, 19)
     .replace("T", " ");
 
-  const userActivation = new UsersActivation({
+  const userActivation = new UserActivation({
+    uuid,
     verificationCode,
-    createdAt,
-    userId
+    createdAt
   });
 
   try {
@@ -170,14 +186,14 @@ async function createAccount(req, res, next) {
    */
 
   try {
-    const profileModel = new ProfileModel({
+    const userProfileModel = new UserProfileModel({
       uuid,
       email: accountData.email,
       password: securePassword,
       createdAt
     });
 
-    await profileModel.save();
+    await userProfileModel.save();
     const verificationCode = await addVerificationCode(uuid);
 
     await sendEmailRegistration(accountData.email, verificationCode);

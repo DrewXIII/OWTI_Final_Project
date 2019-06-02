@@ -5,8 +5,8 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 
 const AccountNotActivatedError = require("./errors/account-not-activated-error");
-const UsersActivation = require("../../models/users-activation-model");
-const Profile = require("../../models/profile-model");
+const UserActivationModel = require("../../models/user-activation-model");
+const UserProfileModel = require("../../models/user-profile-model");
 
 async function validateData(payload) {
   const schema = {
@@ -23,7 +23,7 @@ async function validateData(payload) {
 
 async function login(req, res, next) {
   /**
-   * Validar datos de entrada con Joi
+   * Validación de los datos de entrada con Joi.
    */
   const accountData = { ...req.body };
   try {
@@ -33,39 +33,44 @@ async function login(req, res, next) {
   }
 
   /**
-   * Check si existe el usuario en la bbdd
+   * 1. Comprobación de que el usuario existe en la base de datos.
    */
   try {
-    const userProfile = await Profile.findOne({ email: accountData.email });
+    const userProfile = await UserProfileModel.findOne({
+      email: accountData.email
+    });
 
     if (!userProfile) {
-      return res.status(400).send("Invalid email or password");
+      return res.status(400).send("Invalid email");
     }
 
     /**
-     * Paso 2: accountNotActivated
+     * 2. Comprobación de que la cuenta está activada.
      */
 
-    const usersActivation = await UsersActivation.findOne({
-      userId: userProfile.uuid
+    const userActivation = await UserActivationModel.findOne({
+      uuid: userProfile.uuid
     });
-    if (!usersActivation || !usersActivation.verifiedAt) {
-      return res.status(400).send("Please, activate your account");
+    if (!userActivation || !userActivation.verifiedAt) {
+      const accountNotActivated = new AccountNotActivatedError(
+        "You need to confirm the verification link"
+      );
+      return next(accountNotActivated);
     }
 
     /**
-     * Paso3: La clave es valida?
+     * 3. Comprobación de la password.
      */
-    const isPasswordCorrect = await bcrypt.compare(
+    const passwordChecked = await bcrypt.compare(
       accountData.password,
       userProfile.password
     );
-    if (isPasswordCorrect === false) {
-      return res.status(400).send("Invalid email or password");
+    if (passwordChecked === false) {
+      return res.status(400).send("Invalid password");
     }
 
     /**
-     * Paso 4: Generar token JWT con uuid + role (admin) asociado al token
+     * 4. Se genera un token JWT con uuid + role (admin) asociado al token
      * La duración del token es de 1 minuto (podria ir en variable de entorno)
      */
     const payloadJwt = {

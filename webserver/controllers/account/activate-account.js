@@ -1,6 +1,6 @@
 "use strict";
 
-const UsersActivation = require("../../../models/users-activation-model");
+const UserActivation = require("../../../models/user-activation-model");
 
 async function activate(req, res, next) {
   const { verification_code: verificationCode } = req.query;
@@ -15,7 +15,7 @@ async function activate(req, res, next) {
   try {
     const now = new Date();
     const query = { verificationCode };
-    await UsersActivation.findOneAndUpdate(query, { verifiedAt: now });
+    await UserActivation.findOneAndUpdate(query, { verifiedAt: now });
     return res.status(200).send("Activated"); // 200 OK - HTTP
   } catch (e) {
     return res.status(500).send(e.message); // 500 INTERVAL SERVER ERROR - HTTP
