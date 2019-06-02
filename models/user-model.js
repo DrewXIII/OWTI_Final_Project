@@ -30,6 +30,14 @@ const userSchema = new Schema({
   }
 });
 
+userSchema.index({
+  fullName: "text",
+  "preferences.twitter": "text",
+  "preferences.instagram": "text",
+  "preferences.facebook": "text",
+  "preferences.web": "text"
+});
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
