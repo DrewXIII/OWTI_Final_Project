@@ -68,6 +68,7 @@ app.use((err, req, res, next) => {
 
 app.use("/api", routers.accountRouter);
 app.use("/api", routers.postRouter);
+app.use("/api", routers.searchRouter);
 app.use("/api", routers.userRouter);
 
 // Lo que está a continuación es por si hay un error en la cuenta.
