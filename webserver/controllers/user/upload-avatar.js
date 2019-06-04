@@ -17,7 +17,7 @@ async function uploadAvatar(req, res, next) {
     return res.status(400).send("The file does not exist"); // 400 Bad Request - HTTP
   }
 
-  cloudinary.v2.upload_stream(
+  cloudinary.v2.uploader.upload_stream(
     {
       resource_type: "raw",
       public_id: uuid,
@@ -31,7 +31,7 @@ async function uploadAvatar(req, res, next) {
         return res.status(400).send(err);
       }
 
-      const { etag, secure_url: secure_url } = result;
+      const { etag, secure_url: secureUrl } = result;
 
       const filter = {
           uuid
