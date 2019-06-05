@@ -197,11 +197,16 @@ async function createAccount(req, res, next) {
     const verificationCode = await addVerificationCode(uuid);
 
     await sendEmailRegistration(accountData.email, verificationCode);
+    console.log("Hello 1");
     await createWall(uuid);
+    console.log("Hello 2");
     await createProfile(uuid);
+    console.log("Hello 3");
 
     return res.status(201).send(); // 201 Created - HTTP
   } catch (e) {
+    console.log("Error creating profile");
+    console.log(e.message);
     return res.status(500).send(e.message); // 500 Internal Server Error - HTTP
   }
 }

@@ -9,11 +9,11 @@ const { AUTH_JWT_SECRET: authJwtSecret } = process.env;
 function checkJwtToken(req, res, next) {
   const { authorization } = req.headers;
   if (!authorization) {
-    return res.status(401).send(); // 401 Unauthorized error
+    return res.status(401).send("Missing authorization token"); // 401 Unauthorized error
   }
 
-  const [prefix, token] = authorization.split(" "); // [JWT, xxxx]
-  if (prefix !== "JWT") {
+  const [prefix, token] = authorization.split(" "); // [Bearer, xxxx]
+  if (prefix !== "Bearer") {
     return res.status(401).send(); // 401 Unauthorized error
   }
 
