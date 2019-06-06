@@ -9,7 +9,7 @@ const wallSchema = new Schema({
     type: String,
     unique: true
   },
-  post: Schema.ObjectId
+  post: Number
 });
 
 const Wall = mongoose.model("Wall", wallSchema);

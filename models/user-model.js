@@ -14,7 +14,7 @@ const userSchema = new Schema({
   address: {
     addressLocality: String,
     addressRegion: String,
-    postalCode: Number,
+    postalCode: String,
     streetAddress: String
   },
   preferences: {
@@ -26,7 +26,7 @@ const userSchema = new Schema({
   },
   contact: {
     email: String,
-    phoneNumber: Number
+    phoneNumber: String
   }
 });
 

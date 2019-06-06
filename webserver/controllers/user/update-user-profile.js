@@ -11,29 +11,39 @@ async function validate(payload) {
     fullName: Joi.string()
       .min(3)
       .max(128)
-      .required(),
+      .allow(null),
     address: Joi.object().keys({
-      addressLocality: String,
-      addressRegion: String,
-      postalCode: Number,
-      streetAddress: String
+      addressLocality: Joi.string()
+        .min(3)
+        .max(128)
+        .allow(null),
+      addressRegion: Joi.string()
+        .min(3)
+        .max(128)
+        .allow(null),
+      postalCode: Joi.string()
+        .min(3)
+        .max(128)
+        .allow(null),
+      streetAddress: Joi.string()
+        .min(3)
+        .max(128)
+        .allow(null)
     }),
     preferences: Joi.object().keys({
       twitter: Joi.string().allow(null),
       instagram: Joi.string().allow(null),
       facebook: Joi.string().allow(null),
-      web: Joi.string()
-        .uri()
-        .allow(null),
+      web: Joi.string().allow(null),
       description: Joi.string().allow(null)
     }),
     contact: Joi.object().keys({
       email: Joi.string()
         .email({ minDomainAtoms: 2 })
-        .required(),
-      phoneNumber: JoiPhoneNumber.string()
-        .phoneNumber({ defaultCountry: "ES", format: "international" })
-        .required()
+        .allow(null),
+      phoneNumber: Joi.string()
+        .regex(/^[a-zA-Z0-9]{3,30}$/)
+        .allow(null)
     })
   };
 
@@ -41,7 +51,7 @@ async function validate(payload) {
 }
 
 async function updateUserProfile(req, res, next) {
-  const userDataProfile = { ...req, body };
+  const userDataProfile = { ...req.body };
   const { claims } = req; // Esto es igual a const claims = req.claims;
 
   try {
