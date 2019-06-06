@@ -19,7 +19,7 @@ async function validate(payload) {
   return Joi.validate(payload, schema);
 }
 
-async function searchUsers(req, res, next) {
+async function searchLocal(req, res, next) {
   const { q } = req.query;
 
   try {
@@ -93,4 +93,4 @@ async function searchUsers(req, res, next) {
   }
 }
 
-module.exports = searchUsers;
+module.exports = searchLocal;
