@@ -5,10 +5,10 @@ const Joi = require("joi"); // Object schema description language and validator 
 const sendgridMail = require("@sendgrid/mail"); // This is a dedicated service for interaction with the mail endpoint of the Sendgrid v3 API.
 const uuidV4 = require("uuid/v4"); // Simple, fast generation of RFC4122 UUIDS.This one generates and returns a RFC4122 v4 UUID (Universally Unique IDentifier).
 
+const UserCapacityModel = require("../../models/user-capacity-model");
 const UserProfileModel = require("../../models/user-profile-model");
 const UserActivation = require("../../models/user-activation-model");
 const UserModel = require("../../models/user-model");
-const WallModel = require("../../models/wall-model");
 
 // La información de la librería de @sendgrid/mail me indica como utilizarla. Lo que está escrito a continuación sería el modelo. Yo tendré que hacer unos cambios para ajustarlo a lo que yo quiero, pero la base será la misma. La expresión viene a indicar que se mandará un correo (que yo tengo que crear) al usuario.
 
@@ -49,18 +49,19 @@ async function validateSchema(payload) {
 }
 
 /**
- * 2. Creo el muro que tendrá el usuario.
+ * 2. Creo el lugar donde se guardarán los post de la capacidad del bar.
+ *
  */
 
-async function createWall(uuid) {
+async function createUserCapacity(uuid) {
   const data = {
     uuid,
-    post: ""
+    content: ""
   };
 
-  const wall = await WallModel.create(data);
+  const capacity = await UserCapacityModel.create(data);
 
-  return wall;
+  return capacity;
 }
 
 /**
@@ -197,7 +198,7 @@ async function createAccount(req, res, next) {
     const verificationCode = await addVerificationCode(uuid);
 
     await sendEmailRegistration(accountData.email, verificationCode);
-    await createWall(uuid);
+    await createUserCapacity(uuid);
     await createProfile(uuid);
 
     return res.status(201).send(); // 201 Created - HTTP

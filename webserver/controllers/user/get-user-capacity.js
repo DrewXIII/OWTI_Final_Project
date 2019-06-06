@@ -1,8 +1,9 @@
 "use strict";
 
 const UserModel = require("../../../models/user-model");
+const UserCapacityModel = require("../../../models/user-capacity-model");
 
-async function getUserProfile(req, res, next) {
+async function getUserCapacityProfile(req, res, next) {
   const { uuid } = req.claims; // Esto es lo mismo que const uuid = req.claims.uuid
 
   /**
@@ -26,9 +27,12 @@ async function getUserProfile(req, res, next) {
    * findOne(query, projection) => Returns one document that satisfies the specified query criteria on the collection or view. If multiple documents satisfy the query, this method returns the first document according to the natural order which reflects the order of documents on the disk. In capped collections, natural order is the same as insertion order. If no document satisfies the query, the method returns null.
    *
    */
-  const userProfile = await UserModel.findOne({ uuid }, projection);
+  const userCapacityProfile = await UserCapacityModel.findOne(
+    { uuid },
+    projection
+  );
 
-  return res.status(200).send(userProfile); // 200 OK - HTTP
+  return res.status(200).send(userCapacityProfile); // 200 OK - HTTP
 }
 
-module.exports = getUserProfile;
+module.exports = getUserCapacityProfile;

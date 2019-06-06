@@ -2,7 +2,6 @@
 
 const dot = require("dot-object"); // Dot-Object makes it possible to transform javascript objects using dot notation.
 const Joi = require("joi"); // Object schema description language and validator for JavaScript objects.
-const JoiPhoneNumber = require("google-libphonenumber");
 
 const UserModel = require("../../../models/user-model");
 

@@ -9,11 +9,7 @@ const capacitySchema = new Schema({
     type: String,
     unique: true
   },
-  post: Number,
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  content: String
 });
 
 const Capacity = mongoose.model("Capacity", capacitySchema);
