@@ -46,7 +46,7 @@ async function getUserWall(req, res, next) {
         data: ""
       };
     }
-    console.log("hasta aqui va"); // ¿por qué no va lo de abajo?
+    console.log("hasta aqui va en get-user-wall"); // ¿por qué no va lo de abajo?
     // const post = await getPostById(wall.post);
 
     // const response = {
