@@ -9,7 +9,7 @@ const capacitySchema = new Schema({
     type: String,
     unique: true
   },
-  content: String
+  capacity: String
 });
 
 const Capacity = mongoose.model("Capacity", capacitySchema);

@@ -3,7 +3,27 @@
 const UserModel = require("../../../models/user-model");
 
 async function getUserProfile(req, res, next) {
-  const { uuid } = req.claims; // Esto es lo mismo que const uuid = req.claims.uuid
+  const { uuid } = req.claims;
+
+  /**
+   * Esto es lo mismo que const uuid = req.claims.uuid
+   *
+   * 'claims' viene de check-jwt-token. Esto quiere decir que nos viene un objeto con el rol del usuario y su uuid.
+   * 
+   * try {
+    const decoded = jwt.verify(token, authJwtSecret);
+
+    req.claims = {
+      uuid: decoded.uuid,
+      role: decoded.role
+    };
+
+    return next();
+  }
+   * 
+   * 
+   * 
+   */
 
   /**
    * Escribo las condiciones para buscar el perfil de usuario.

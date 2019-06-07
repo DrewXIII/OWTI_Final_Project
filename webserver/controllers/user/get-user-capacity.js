@@ -1,6 +1,5 @@
 "use strict";
 
-const UserModel = require("../../../models/user-model");
 const UserCapacityModel = require("../../../models/user-capacity-model");
 
 async function getUserCapacityProfile(req, res, next) {

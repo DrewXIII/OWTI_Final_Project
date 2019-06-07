@@ -12,7 +12,6 @@ const updateUserCapacity = require("../controllers/user/update-user-capacity");
 const upload = multer();
 
 const router = express.Router();
-
 router.get("/user", checkJwtToken, getUserProfile);
 router.put("/user", checkJwtToken, updateUserProfile);
 router.get("/user/capacity", checkJwtToken, getUserCapacity);

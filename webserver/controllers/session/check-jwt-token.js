@@ -24,6 +24,10 @@ function checkJwtToken(req, res, next) {
   try {
     const decoded = jwt.verify(token, authJwtSecret);
 
+    /**
+     * Guardamos en req.claims el uuid y el rol del usuario y eso se transmitirá para comprobar que ese usuario puede hacer cosas si hay necesidad de estar registrado.
+     */
+
     req.claims = {
       uuid: decoded.uuid,
       role: decoded.role
