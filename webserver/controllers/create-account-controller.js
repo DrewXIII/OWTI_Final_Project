@@ -56,7 +56,7 @@ async function validateSchema(payload) {
 async function createUserCapacity(uuid) {
   const data = {
     uuid,
-    content: ""
+    capacity: ""
   };
 
   const capacity = await UserCapacityModel.create(data);

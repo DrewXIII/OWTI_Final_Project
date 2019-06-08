@@ -64,11 +64,14 @@ async function updateUserCapacity(req, res, next) {
 
   try {
     const userCapacityDataMongoose = dot.dot(userCapacityData);
+
     const data = await UserCapacityModel.updateOne(
       { uuid: claims.uuid },
       userCapacityDataMongoose
     );
+
     console.log("mongoose data", data);
+
     return res.status(204).send(); // 204 No Content - HTTP
   } catch (err) {
     return res.status(500).send(err.message); // 500 Internal Server Error - HTTP
