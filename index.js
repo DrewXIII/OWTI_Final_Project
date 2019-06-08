@@ -67,6 +67,7 @@ app.use((err, req, res, next) => {
 // Activo los endpoints que van a estar disponibles
 
 app.use("/api", routers.accountRouter);
+app.use("/api", routers.localRouter);
 app.use("/api", routers.searchRouter);
 app.use("/api", routers.userRouter);
 

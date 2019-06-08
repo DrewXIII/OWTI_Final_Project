@@ -20,28 +20,41 @@ async function validate(payload) {
 }
 
 async function searchLocal(req, res, next) {
+  /**
+   *
+   * 1. Validamos que lo que viene del front es un string.
+   *
+   */
+
   const { q } = req.query;
+
+  /**
+   * Esto es igual a:
+   *
+   * const q = req.query.q;
+   *
+   * Significa que guardamos en la variable 'q' lo que nos viene del frontend.
+   *
+   */
 
   try {
     await validate({ q });
   } catch (e) {
-    return res.status(400).send(e);
+    return res.status(400).send(e); // 400 Bad Request - HTTP
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   /**
- * $text performs a text search on the content of the fields indexed with a text index. A $text expression has the following syntax:
- * 
- * {
-  $text:
-    {
-      $search: <string>, ==> A string of terms that MongoDB parses and uses to query the text index. MongoDB performs a logical OR search of the terms unless specified as a phrase.
-      $language: <string>,
-      $caseSensitive: <boolean>,
-      $diacriticSensitive: <boolean>
-    }
-}
- * 
- */
+   * 2. Buscamos en Mongo DB el valor de 'q'.
+   *
+   * Para ello utilizamos mongoose y la función será find(CONDICIÓN,b).
+   *
+   */
+
+  /**
+   * Esta sería la condición:
+   */
 
   const op = {
     $text: {
@@ -50,6 +63,26 @@ async function searchLocal(req, res, next) {
   };
 
   /**
+ * $text performs a text search on the content of the fields indexed with a text index. A $text expression has the following syntax:
+ * 
+ * {
+    $text:
+      {
+        $search: <string> ==> A string of terms that MongoDB parses and uses to query the text index. MongoDB performs a logical OR search of the terms unless specified as a phrase.
+      }
+    } 
+ * 
+ */
+
+  const scoreSearch = {
+    score: {
+      $meta: "textScore"
+    }
+  };
+
+  /**
+   * The { $meta: "textScore" } expression provides information on the processing of the $text operation.
+   *
    * The $meta projection operator returns for each matching document the metadata (e.g. "textScore") associated with the query. A $meta expression has the following syntax:
    *
    *
@@ -68,15 +101,27 @@ async function searchLocal(req, res, next) {
    * { <projectedFieldName>: { $meta: "textScore" } }
    */
 
-  const scoreSearch = {
-    score: {
-      $meta: "textScore"
-    }
-  };
+  /**
+   * Básicamente lo que se va a hacer es buscar lo que viene del frontend (la 'q'). A esta búsqueda se le asignará una precisión a lo puesto en el campo de búsqueda y se ordenarán los resultados según esa precisión. Esto es lo que hace scoreSeach.
+   *
+   *
+   */
+
   try {
     const users = await UserModel.find(op, scoreSearch)
       .sort(scoreSearch)
       .lean();
+
+    /**
+     * Enabling the lean option tells Mongoose to skip instantiating a full Mongoose document and just give you the POJO.
+     *
+     * Con lean() haré que se me devuelva un objeto en formato Javascript y no propio de Mongo DB.
+     */
+
+    /**
+     *
+     * Por último,
+     */
 
     const usersMinimumInfo = users.map(userResult => {
       const { fullName, score } = userResult;
