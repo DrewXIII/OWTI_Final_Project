@@ -6,6 +6,6 @@ const searchLocal = require("../controllers/search/search-local");
 
 const router = express.Router();
 
-router.post("/search", searchLocal);
+router.get("/search", searchLocal);
 
 module.exports = router;

@@ -74,11 +74,11 @@ async function searchLocal(req, res, next) {
  * 
  */
 
-  const scoreSearch = {
-    score: {
-      $meta: "textScore"
-    }
-  };
+  // const scoreSearch = {
+  //   score: {
+  //     $meta: "textScore"
+  //   }
+  // };
 
   /**
    * The { $meta: "textScore" } expression provides information on the processing of the $text operation.
@@ -108,10 +108,14 @@ async function searchLocal(req, res, next) {
    */
 
   try {
-    const users = await UserModel.find(op, scoreSearch)
-      .sort(scoreSearch)
-      .lean();
+    // const users = await UserModel.find(op, scoreSearch)
+    //   .sort(scoreSearch)
+    //   .lean();
 
+    const users = await UserModel.find({
+      fullName: { $regex: `${q}`, $options: "i" }
+    }).lean();
+    console.log({ users });
     /**
      * Enabling the lean option tells Mongoose to skip instantiating a full Mongoose document and just give you the POJO.
      *
