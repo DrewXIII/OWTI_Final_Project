@@ -11,6 +11,13 @@ async function validate(payload) {
       .min(3)
       .max(128)
       .allow(null),
+    details: Joi.object().keys({
+      maxCapacity: Joi.number().allow(null),
+      openingHours: Joi.string()
+        .min(3)
+        .max(128)
+        .allow(null)
+    }),
     address: Joi.object().keys({
       addressLocality: Joi.string()
         .min(3)

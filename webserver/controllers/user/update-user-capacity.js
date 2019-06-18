@@ -12,7 +12,7 @@ const UserCapacityModel = require("../../../models/user-capacity-model");
 
 async function validate(payload) {
   const schema = {
-    capacity: Joi.string()
+    capacity: Joi.number()
   };
 
   return Joi.validate(payload, schema);

@@ -71,8 +71,12 @@ async function createUserCapacity(uuid) {
 async function createProfile(uuid) {
   const userProfileData = {
     uuid,
-    avatarUrl: null,
+    avatarUrl: [null],
     fullName: null,
+    details: {
+      maxCapacity: null,
+      openingHours: null
+    },
     address: {
       addressLocality: null,
       addressRegion: null,

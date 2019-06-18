@@ -9,8 +9,12 @@ const userSchema = new Schema({
     type: String,
     unique: true
   },
-  avatarUrl: String,
+  avatarUrl: [String],
   fullName: String,
+  details: {
+    maxCapacity: Number,
+    openingHours: String
+  },
   address: {
     addressLocality: String,
     addressRegion: String,

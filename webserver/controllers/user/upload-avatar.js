@@ -39,6 +39,7 @@ async function uploadAvatar(req, res, next) {
    */
 
   const { file } = req;
+
   const { uuid } = req.claims;
 
   /**
@@ -56,7 +57,7 @@ async function uploadAvatar(req, res, next) {
    */
 
   if (!file || !file.buffer) {
-    return res.status(400).send("The file does not exist"); // 400 Bad Request - HTTP
+    return res.status(400).send("The file does not exist"); // 400 Bad Request
   }
 
   /**
@@ -91,6 +92,7 @@ async function uploadAvatar(req, res, next) {
         }
 
         const { secure_url: secureUrl } = result;
+
         /**
          * Esto es lo mismo que:
          *

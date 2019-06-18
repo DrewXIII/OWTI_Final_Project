@@ -28,6 +28,7 @@ router.post(
   upload.single("avatar"),
   uploadAvatar
 ); // En este caso ponemos single porque solamente se subirá una imagen.
+
 router.get("/user/capacity", checkJwtToken, getUserCapacity);
 router.put("/user/capacity", checkJwtToken, updateUserCapacity);
 

@@ -3,6 +3,7 @@
 const Joi = require("joi");
 const UserModel = require("../../../models/user-model");
 const UserCapacityModel = require("../../../models/user-capacity-model");
+const getUserCapacityPercent = require("../../controllers/user/get-user-capacity-percent");
 
 async function validate(payload) {
   const schema = {
@@ -36,7 +37,9 @@ async function searchLocalId(req, res, next) {
       { uuid: userProfile.uuid },
       projection
     );
-    const result = { userProfile, userCapacityProfile };
+    const percentage = await getUserCapacityPercent(fullName);
+    const result = { userProfile, userCapacityProfile, percentage };
+
     return res.status(200).send(result); // 200 OK - HTTP
   } catch (err) {
     return res.status(500).send(err.message); // 500 Internal Server Error - HTT
