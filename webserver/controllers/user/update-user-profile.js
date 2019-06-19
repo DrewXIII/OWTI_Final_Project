@@ -58,7 +58,10 @@ async function validate(payload) {
 
 async function updateUserProfile(req, res, next) {
   const userDataProfile = { ...req.body };
+
   const { claims } = req; // Esto es igual a const claims = req.claims;
+
+  console.log(req.claims);
 
   try {
     await validate(userDataProfile);
