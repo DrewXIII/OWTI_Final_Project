@@ -42,6 +42,8 @@ async function uploadAvatar(req, res, next) {
 
   const { uuid } = req.claims;
 
+  console.log(req.file);
+
   /**
    * Esto es igual a:
    *
