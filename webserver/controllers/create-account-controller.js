@@ -138,7 +138,7 @@ async function addVerificationCode(uuid) {
  */
 
 async function sendEmailRegistration(userEmail, verificationCode) {
-  const linkActivation = `http://localhost:3000/api/account/activate?verification_code=${verificationCode}`;
+  const linkActivation = `https://owti.herokuapp.com/api/account/activate?verification_code=${verificationCode}`;
   const msg = {
     to: userEmail,
     from: {
