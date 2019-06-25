@@ -6,8 +6,6 @@ const activateAccount = require("../controllers/account/activate-account");
 const createAccount = require("../controllers/create-account-controller");
 const login = require("../controllers/login-controller");
 
-// Creo las rutas para cada endpoint.
-
 const router = express.Router();
 
 router.post("/account", createAccount);

@@ -10,30 +10,9 @@ const UserProfileModel = require("../../models/user-profile-model");
 const UserActivation = require("../../models/user-activation-model");
 const UserModel = require("../../models/user-model");
 
-// La información de la librería de @sendgrid/mail me indica como utilizarla. Lo que está escrito a continuación sería el modelo. Yo tendré que hacer unos cambios para ajustarlo a lo que yo quiero, pero la base será la misma. La expresión viene a indicar que se mandará un correo (que yo tengo que crear) al usuario.
-
-/**
- * The following is the minimum needed code to send a simple email. Use this
- *  example, and modify the 'to' and 'from' variables:
- *
- *
- * const sgMail = require('@sendgrid/mail');
- * sgMail.setApiKey(process.env.SENDGRID_API_KEY);
- * const msg = {
- *  to: 'test@example.com',
- *  to: 'test@example.com',
- *  subject: 'Sending with Twilio SendGrid is Fun',
- *  text: 'and easy to do anywhere, even with Node.js',
- *  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
- * };
- * sgMail.send(msg);
- */
-
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// Antes de continuar con el email de confirmación de la cuenta, debo de hacer el cómo se crea la cuenta.
-
-// 1. Creo el esquema válido para poder crear la cuenta. Para eso uso Joi y sus validaciones. Lo que está a continuación es sacado directamente de la información de esta librería.
+// 1. Creo el esquema válido para poder crear la cuenta.
 
 async function validateSchema(payload) {
   const schema = {
