@@ -27,7 +27,7 @@
   "homepage": "https://github.com/DrewXIII/OWTI_Final_Project#readme",
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.14.0",
     "cors": "^2.8.5",
